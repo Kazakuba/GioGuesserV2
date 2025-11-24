@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GeoGuessr Multiplayer</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+</head>
+<body>
+  
+  <div id="mode-overlay">
+    <div id="mode-box">
+      <h1><i class="fas fa-globe-americas"></i> GioGuesser</h1>
+      <p class="subtitle">Explore the world, one click at a time.</p>
+      
+      <div id="mode-buttons">
+        <button id="singleplayer-btn"><i class="fas fa-user"></i> Single Player</button>
+        <button id="multiplayer-btn"><i class="fas fa-users"></i> Multiplayer</button>
+      </div>
+
+      <div id="multiplayer-options" class="hidden">
+        <div class="input-group">
+            <label>Your Name</label>
+            <input id="username-input" type="text" placeholder="Enter your name" maxlength="12" />
+        </div>
+
+        <div class="input-group">
+          <label>Rounds</label>
+          <input id="rounds-input" type="number" min="1" value="5" />
+        </div>
+        <div class="input-group">
+          <label>Time (s)</label>
+          <input id="round-time-input" type="number" min="10" value="60" />
+        </div>
+        
+        <div class="btn-row">
+            <button id="create-room-btn">Create Room</button>
+            <button id="join-room-btn">Join Room</button>
+        </div>
+        <input id="room-code-input" type="text" placeholder="Enter Room Code" />
+        <button id="back-btn" class="secondary-btn">Back</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="lobby-overlay" class="hidden">
+    <div id="lobby-box">
+      <h1>Room Code: <span id="lobby-room-code" style="color: #4CAF50; letter-spacing: 2px;"></span></h1>
+      
+      <div id="lobby-player-list"></div>
+
+      <div id="lobby-footer">
+        <button id="lobby-start-btn" class="primary-action-btn hidden">START GAME</button>
+        <p id="lobby-wait-msg" class="hidden"><i class="fas fa-spinner fa-spin"></i> Waiting for host to start...</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="game-container">
+    <div id="street-view"></div>
+    <div id="map-container" title="Hover to expand/shrink map">
+      <div id="map"></div>
+      <div class="map-hint">Hover to Resize</div>
+    </div>
+  </div>
+
+  <div id="hud-top">
+    <div id="round-display" class="hidden">
+      Round: <span id="current-round">0</span>/<span id="total-rounds">0</span>
+      <span class="separator">|</span>
+      <i class="far fa-clock"></i> <span id="round-timer">0</span>s
+    </div>
+    
+    <div id="health-container">
+        <i class="fas fa-heart"></i>
+        <div id="health-bar-bg">
+            <div id="health-bar"></div>
+        </div>
+        <span id="health-label">100%</span>
+    </div>
+  </div>
+
+  <div id="controls">
+    <button id="guess-button" class="primary-action-btn">MAKE GUESS</button>
+  </div>
+
+  <div id="result" class="hidden">
+    <div id="result-content"></div>
+  </div>
+
+  <div id="compass">
+    <div id="compass-arrow"></div>
+    <div class="compass-direction">N</div>
+  </div>
+
+  <div id="loading">
+    <div class="spinner"></div>
+    <span>Traveling to location...</span>
+  </div>
+
+  <div id="player-icons-container"></div>
+
+  <div id="game-over-overlay" class="hidden">
+    <div id="game-over-box">
+      <h1>Game Over!</h1>
+      
+      <div id="final-scoreboard"></div>
+
+      <div id="host-restart-options" class="hidden">
+        <h3>Play Again?</h3>
+        <div class="input-group">
+            <label>Rounds</label>
+            <input id="new-rounds-input" type="number" min="1" value="5" />
+        </div>
+        <div class="input-group">
+            <label>Time (s)</label>
+            <input id="new-round-time-input" type="number" min="10" value="60" />
+        </div>
+        <div class="btn-row">
+            <button id="restart-game-btn">Start New Game</button>
+        </div>
+      </div>
+
+      <div id="waiting-for-host-message" class="hidden">
+        <p><i class="fas fa-spinner fa-spin"></i> Waiting for host to restart...</p>
+      </div>
+
+      <button id="return-home-btn" class="secondary-btn" style="margin-top: 20px;">Return to Menu</button>
+    </div>
+  </div>
+  
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  
+  <script src="script.js"></script>
+  <script src="src/ui.js"></script>
+  <script src="src/gameLogic.js"></script>
+  <script src="src/firebase.js"></script>
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=Your_Google_Maps_API_Key_Here&libraries=geometry&loading=async&callback=initMap"
+    async defer
+  ></script>
+</body>
+</html>
